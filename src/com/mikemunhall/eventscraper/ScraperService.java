@@ -1,4 +1,4 @@
-package com.mikemunhall.scraper;
+package com.mikemunhall.eventscraper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

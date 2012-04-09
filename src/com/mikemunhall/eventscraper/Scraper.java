@@ -1,15 +1,9 @@
-package com.mikemunhall.scraper;
+package com.mikemunhall.eventscraper;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.io.FileInputStream;
 import java.util.Properties;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Scraper {
 
