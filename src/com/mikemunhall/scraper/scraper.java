@@ -1,23 +1,27 @@
 package com.mikemunhall.scraper;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.io.FileInputStream;
+import java.util.Properties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 
-public class scraper {
-
-    private static String scrapeUrl = "http://nexgen.cpr.org/playlist.html";
-    private static int scrapeInterval = 120;
+public class Scraper {
 
     public static void main(String[] args) throws ParseException, IOException {
+
+        String scraperConfigPath = System.getProperty("configPath", "./config/config.properties");
+
+        Properties props = new Properties();
+        props.load(new FileInputStream(scraperConfigPath));
+
+        String scrapeUrl   = props.getProperty("scrapeUrl");
+
         String playDate = "";
         ArrayList<String> labels = new ArrayList<String>();
         ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
