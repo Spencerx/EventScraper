@@ -18,7 +18,7 @@ public class scraper {
     private static int scrapeInterval = 120;
 
     public static void main(String[] args) throws ParseException, IOException {
-        Calendar playDate = Calendar.getInstance();
+        String playDate = "";
         ArrayList<String> labels = new ArrayList<String>();
         ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
 
@@ -34,9 +34,7 @@ public class scraper {
                     rowIterator.next();
                     break;
                 case 1: // playDate
-                    String extractedDate = ((Element) rowIterator.next()).select("big big").text();
-                    SimpleDateFormat playDateFormatter = new SimpleDateFormat("MMMMM dd, yyyy");
-                    playDate = playDateFormatter.parse(extractedDate);
+                    playDate = ((Element) rowIterator.next()).select("big big").text();
                     break;
                 case 2: // labels
                     Elements labelCells = ((Element) rowIterator.next()).select("td");
@@ -51,13 +49,12 @@ public class scraper {
 
                     int j=0;
                     while (eventCellIterator.hasNext()) {
-                        SimpleDateFormat eventDateFormatter = new SimpleDateFormat("MMMMM dd, yyyy h:mm a");
                         String val = ((Element) eventCellIterator.next()).text();
-                        if (labels[j] == 'Start') {
-                            // This is the start time. Merge value with playDate
-
-
-                            val = eventDateFormatter(playDate.getYear(), playDate)
+                        if (labels.get(j).equals("Start")) {
+                            // This cell is the start time. Concat with playDate. We could also create an instance of
+                            // java.util.Date or java.util.Calendar, but since we're just going to cast back to a
+                            // string, there doesn't seem to be much point.
+                            val = playDate + " " + String.valueOf(val);
                         }
                         event.add(val);
                         j++;
