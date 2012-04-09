@@ -1,9 +1,11 @@
 package com.mikemunhall.eventscraper;
 
 import com.mikemunhall.eventscraper.service.ScraperService;
+import com.mikemunhall.eventscraper.model.ScrapedEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Scraper {
@@ -15,7 +17,9 @@ public class Scraper {
         Properties props = new Properties();
         props.load(new FileInputStream(scraperConfigPath));
 
-        ScraperService service = new ScraperService(props.getProperty("scrapeUrl"));
-        service.readAndSave();
+        String scrapeUrl = props.getProperty("scrapeUrl");
+
+        ArrayList<ScrapedEvent> events = ScraperService.parse(scrapeUrl);
+        ScraperService.persist(events);
     }
 }

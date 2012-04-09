@@ -12,14 +12,14 @@ public class ScrapedEvent {
     }
 
     public ScrapedEvent(HashMap<String, String> map) {
-        set(map);
+        putAll(map);
     }
 
-    public void set(HashMap<String, String> map) {
+    public void putAll(HashMap<String, String> map) {
         this.map = map;
     }
 
-    public void add(String key, String value) {
+    public void put(String key, String value) {
         this.map.put(key, value);
     }
 
