@@ -1,5 +1,6 @@
 package com.mikemunhall.eventscraper;
 
+import com.mikemunhall.eventscraper.service.ScraperService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.io.FileInputStream;
