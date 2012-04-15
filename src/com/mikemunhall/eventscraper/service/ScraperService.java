@@ -1,11 +1,13 @@
 package com.mikemunhall.eventscraper.service;
 
+import com.mikemunhall.eventscraper.dao.ScraperDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.mikemunhall.eventscraper.model.ScrapedEvent;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -66,7 +68,12 @@ public class ScraperService {
         return events;
     }
 
-    public static void persist(ArrayList<ScrapedEvent> events) {
+    public static void persist(ArrayList<ScrapedEvent> events, String dbHost, Integer dbPort, String dbSchema) throws UnknownHostException {
+        ScraperDao dao = new ScraperDao(dbHost, dbPort, dbSchema);
 
+        Iterator it = events.iterator();
+        while (it.hasNext()) {
+            dao.save((ScrapedEvent) it.next());
+        }
     }
 }

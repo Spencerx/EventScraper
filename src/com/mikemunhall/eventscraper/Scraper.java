@@ -18,8 +18,11 @@ public class Scraper {
         props.load(new FileInputStream(scraperConfigPath));
 
         String scrapeUrl = props.getProperty("scrapeUrl");
+        String dbHost = props.getProperty("dbHost");
+        Integer dbPort = Integer.parseInt(props.getProperty("dbPort"));
+        String dbSchema = props.getProperty("dbSchema");
 
         ArrayList<ScrapedEvent> events = ScraperService.parse(scrapeUrl);
-        ScraperService.persist(events);
+        ScraperService.persist(events, dbHost, dbPort, dbSchema);
     }
 }
