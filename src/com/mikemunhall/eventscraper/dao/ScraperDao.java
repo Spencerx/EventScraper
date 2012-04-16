@@ -1,32 +1,36 @@
 package com.mikemunhall.eventscraper.dao;
 
 import com.mikemunhall.eventscraper.model.ScrapedEvent;
+import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.DBCursor;
 import java.net.UnknownHostException;
-import java.util.Set;
+import java.util.Iterator;
 
 public class ScraperDao {
 
     Mongo m = null;
-    DB conn = null;
+    DB db = null;
 
     public ScraperDao(String host, Integer port, String dbName) throws UnknownHostException {
         this.m = new Mongo(host, port);
-        this.conn = m.getDB(dbName);
+        this.db = m.getDB(dbName);
     }
 
     public boolean save(ScrapedEvent event) {
-        Set<String> colls = conn.getCollectionNames();
+        DBCollection eventsCollection = db.getCollection("events");
 
-        for (String s : colls) {
-            System.out.println(s);
+        BasicDBObject doc = new BasicDBObject();
+
+        Iterator it = event.iterator();
+
+        while (it.hasNext()) {
+            doc.put(it.next().key(), it.next().val());
         }
-System.out.println("done");
+
+        eventsCollection.insert(doc);
+
         return true;
     }
 }

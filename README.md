@@ -10,3 +10,10 @@ TODOS
     * Convert service, parser and DAO to singletons
     * Inject parser and DAO instances into service
 * Document dependencies in this README.
+
+ARTISTS
+ALBUMS
+TRACKS
+LABELS
+EVENTS
+
