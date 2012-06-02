@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import java.net.UnknownHostException;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ScraperDao {
 
@@ -26,7 +27,8 @@ public class ScraperDao {
         Iterator it = event.iterator();
 
         while (it.hasNext()) {
-            doc.put(it.next().key(), it.next().val());
+            Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
+            doc.put(entry.getKey(), entry.getValue());
         }
 
         eventsCollection.insert(doc);
