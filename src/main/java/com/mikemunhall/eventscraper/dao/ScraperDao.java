@@ -11,28 +11,35 @@ import java.util.Map;
 
 public class ScraperDao {
 
-    Mongo m = null;
-    DB db = null;
+    private Mongo m = null;
+    private DB db = null;
 
     public ScraperDao(String host, Integer port, String dbName) throws UnknownHostException {
         this.m = new Mongo(host, port);
         this.db = m.getDB(dbName);
     }
 
-    public boolean save(ScrapedEvent event) {
+    /**
+     * Persists an event
+     * @param event
+     * @return Number of keys saved for event
+     */
+    public int save(ScrapedEvent event) {
         DBCollection eventsCollection = db.getCollection("events");
 
         BasicDBObject doc = new BasicDBObject();
 
         Iterator it = event.iterator();
 
+        int count = 0;
         while (it.hasNext()) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
             doc.put(entry.getKey(), entry.getValue());
+            count++;
         }
 
         eventsCollection.insert(doc);
 
-        return true;
+        return count;
     }
 }

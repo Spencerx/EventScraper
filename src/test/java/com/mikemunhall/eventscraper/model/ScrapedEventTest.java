@@ -1,9 +1,7 @@
 package com.mikemunhall.eventscraper.model;
 
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.*;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
