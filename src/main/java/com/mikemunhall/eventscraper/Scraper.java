@@ -2,27 +2,19 @@ package com.mikemunhall.eventscraper;
 
 import com.mikemunhall.eventscraper.service.ScraperService;
 import com.mikemunhall.eventscraper.model.ScrapedEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.IOException;
-import java.text.ParseException;
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class Scraper {
 
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args) throws IOException {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("resources.xml");
 
-        String scraperConfigPath = System.getProperty("configPath", "./config/config.properties");
+        ScraperService scraperService = (ScraperService) ctx.getBean("scraperService");
 
-        Properties props = new Properties();
-        props.load(new FileInputStream(scraperConfigPath));
-
-        String scrapeUrl = props.getProperty("scrapeUrl");
-        String dbHost = props.getProperty("dbHost");
-        Integer dbPort = Integer.parseInt(props.getProperty("dbPort"));
-        String dbSchema = props.getProperty("dbSchema");
-
-        ArrayList<ScrapedEvent> events = ScraperService.parse(scrapeUrl);
-        ScraperService.persist(events, dbHost, dbPort, dbSchema);
+        ArrayList<ScrapedEvent> events = scraperService.parse("http://nexgen.cpr.org/playlist.html");
+        scraperService.persist(events);
     }
 }

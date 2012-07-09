@@ -7,13 +7,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.mikemunhall.eventscraper.model.ScrapedEvent;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ScraperService {
 
-    public static ArrayList<ScrapedEvent> parse(String scrapeUrl) throws IOException {
+    private ScraperDao dao = null;
+    // private ScraperParser parser = null;
+
+    public ScraperService() { }
+
+    public ArrayList<ScrapedEvent> parse(String scrapeUrl) throws IOException {
         String eventDate = "";
         ArrayList<String> labels = new ArrayList<String>();
         ArrayList<ScrapedEvent> events = new ArrayList<ScrapedEvent>();
@@ -68,12 +72,26 @@ public class ScraperService {
         return events;
     }
 
-    public static void persist(ArrayList<ScrapedEvent> events, String dbHost, Integer dbPort, String dbSchema) throws UnknownHostException {
-        ScraperDao dao = new ScraperDao(dbHost, dbPort, dbSchema);
-
+    public void persist(ArrayList<ScrapedEvent> events) {
         Iterator it = events.iterator();
         while (it.hasNext()) {
-            dao.save((ScrapedEvent) it.next());
+            this.dao.save((ScrapedEvent) it.next());
         }
     }
+
+    public void setDao(ScraperDao dao) {
+        this.dao = dao;
+    }
+
+    public ScraperDao getDao() {
+        return this.dao;
+    }
+
+    /*public ScraperParser getParser() {
+        return parser;
+    }
+
+    public void setParser(ScraperParser parser) {
+        this.parser = parser;
+    }*/
 }

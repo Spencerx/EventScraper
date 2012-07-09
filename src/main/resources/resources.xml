@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean name="mongo" class="com.mongodb.Mongo">
+        <constructor-arg value="localhost" />
+        <constructor-arg value="27017" />
+    </bean>
+    <bean name="database" factory-bean="mongo" factory-method="getDB">
+        <constructor-arg value="openAirEvents" />
+    </bean>
+    <bean name="scraperDao" class="com.mikemunhall.eventscraper.dao.ScraperDao">
+        <property name="database" ref="database" />
+    </bean>
+    <bean name="scraperService" class="com.mikemunhall.eventscraper.service.ScraperService">
+        <property name="dao" ref="scraperDao" />
+    </bean>
+</beans>

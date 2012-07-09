@@ -1,25 +1,44 @@
 package com.mikemunhall.eventscraper.dao;
 
-import com.mikemunhall.eventscraper.dao.ScraperDao;
-import com.mikemunhall.eventscraper.model.ScrapedEvent;
-import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
-import com.mongodb.DB;
-import org.testng.annotations.*;
-import java.net.UnknownHostException;
-import java.util.HashMap;
+import de.flapdoodle.embedmongo.MongoDBRuntime;
+import de.flapdoodle.embedmongo.MongodExecutable;
+import de.flapdoodle.embedmongo.MongodProcess;
+import de.flapdoodle.embedmongo.config.MongodConfig;
+import de.flapdoodle.embedmongo.distribution.Version;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.spy;
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import static org.testng.Assert.*;
 
 public class ScraperDaoTest {
 
-    private ScraperDao dao;
+    private MongodExecutable mongoDExe;
+    private MongodProcess mongoD;
+    private Mongo mongo;
+
+    @BeforeClass
+    public void startMongo() throws IOException {
+        MongoDBRuntime runtime = MongoDBRuntime.getDefaultInstance();
+        mongoDExe = runtime.prepare(new MongodConfig(Version.V2_0, 2306, false));
+        mongoD = mongoDExe.start();
+        mongo = new Mongo("localhost", 2307);
+    }
+
+    @AfterClass
+    public void stopMongo() {
+        mongoD.stop();
+        mongoDExe.cleanup();
+    }
 
     @BeforeMethod
     public void setUp() throws UnknownHostException{
-        dao = new ScraperDao("localhost", 27129, "unittests");
         System.out.println("setUp");
     }
 
@@ -29,20 +48,12 @@ public class ScraperDaoTest {
     }
 
     @Test
-    public void testInsertEmptyDocument_ReturnsZer0() {
-        assertEquals(0, dao.save(new ScrapedEvent()));
+    public void testInsertEmptyDocument_Returns0AndInsertsNoRecords() {
+        System.out.println("test1");
     }
 
     @Test
-    public void testInsertDocumentWithEvent_Returns2() {
-        DBCollection coll = spy(DB.);
-
-
-
-        HashMap<String, String> record = new HashMap<String, String>();
-        record.put("One", "_1_");
-        record.put("Two", "_2_");
-        ScrapedEvent event = new ScrapedEvent(record);
-        assertEquals(2, dao.save(event));
+    public void testInsertDocumentWithEvent_Returns2AndInsertsTwoRecords() {
+        System.out.println("test2");
     }
 }
