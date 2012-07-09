@@ -7,7 +7,7 @@ import com.mongodb.DBCollection;
 import java.util.Iterator;
 import java.util.Map;
 
-public class ScraperDao {
+public class ScraperDao implements IScraperDao {
 
     private DB database = null;
 

@@ -1,6 +1,6 @@
 package com.mikemunhall.eventscraper.service;
 
-import com.mikemunhall.eventscraper.dao.ScraperDao;
+import com.mikemunhall.eventscraper.dao.IScraperDao;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class ScraperService {
 
-    private ScraperDao dao = null;
+    private IScraperDao dao = null;
     // private ScraperParser parser = null;
 
     public ScraperService() { }
@@ -79,11 +79,11 @@ public class ScraperService {
         }
     }
 
-    public void setDao(ScraperDao dao) {
+    public void setDao(IScraperDao dao) {
         this.dao = dao;
     }
 
-    public ScraperDao getDao() {
+    public IScraperDao getDao() {
         return this.dao;
     }
 
