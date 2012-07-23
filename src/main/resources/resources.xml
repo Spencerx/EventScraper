@@ -8,10 +8,12 @@
     <bean name="database" factory-bean="mongo" factory-method="getDB">
         <constructor-arg value="openAirEvents" />
     </bean>
-    <bean name="scraperDao" class="com.mikemunhall.eventscraper.dao.ScraperDao">
+    <bean name="scraperDao" class="com.mikemunhall.eventscraper.dao.MongoDao">
         <property name="database" ref="database" />
     </bean>
+    <bean name="openAirParser" class="com.mikemunhall.eventscraper.parser.OpenAirParser" />
     <bean name="scraperService" class="com.mikemunhall.eventscraper.service.ScraperService">
         <property name="dao" ref="scraperDao" />
+        <property name="parser" ref="openAirParser" />
     </bean>
 </beans>

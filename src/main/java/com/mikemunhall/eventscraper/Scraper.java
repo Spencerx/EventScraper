@@ -11,9 +11,7 @@ public class Scraper {
 
     public static void main(String[] args) throws IOException {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("resources.xml");
-
         ScraperService scraperService = (ScraperService) ctx.getBean("scraperService");
-
         ArrayList<ScrapedEvent> events = scraperService.parse("http://nexgen.cpr.org/playlist.html");
         scraperService.persist(events);
     }

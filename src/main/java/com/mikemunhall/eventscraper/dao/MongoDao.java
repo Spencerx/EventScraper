@@ -7,11 +7,11 @@ import com.mongodb.DBCollection;
 import java.util.Iterator;
 import java.util.Map;
 
-public class ScraperDao implements IScraperDao {
+public class MongoDao implements IScraperDao {
 
     private DB database = null;
 
-    public ScraperDao() { }
+    public MongoDao() { }
 
     public int save(ScrapedEvent event) {
         DBCollection eventsCollection = database.getCollection("events");

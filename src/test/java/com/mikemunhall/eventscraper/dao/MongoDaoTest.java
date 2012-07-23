@@ -20,14 +20,14 @@ import java.util.HashMap;
 
 import static org.testng.Assert.*;
 
-public class ScraperDaoTest {
+public class MongoDaoTest {
 
     private String dbName = "dbunittests";
     private MongodExecutable mongoDExe;
     private MongodProcess mongoD;
     private Mongo mongo;
     private DB db;
-    private ScraperDao dao = new ScraperDao();
+    private MongoDao dao = new MongoDao();
 
     @BeforeClass
     public void startMongo() throws IOException {
