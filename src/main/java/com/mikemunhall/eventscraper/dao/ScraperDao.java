@@ -27,9 +27,16 @@ public class ScraperDao implements IScraperDao {
             count++;
         }
 
-        eventsCollection.insert(doc);
-        System.out.println(doc);
-        return count;
+        if (count > 0 && isUnique(doc)) {
+            eventsCollection.insert(doc);
+            return count;
+        } else {
+            return 0;
+        }
+    }
+
+    private boolean isUnique(BasicDBObject doc) {
+        return database.getCollection("events").find(doc).count() == 0;
     }
 
     public void setDatabase(DB database) {
